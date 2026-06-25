@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Mail } from "lucide-react";
 
 const links = [
@@ -35,12 +36,16 @@ export default function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 py-10 md:flex-row">
         <Link
           href="#accueil"
-          className="flex items-center gap-2 text-lg font-bold tracking-tight text-ink"
+          className="flex items-center"
+          aria-label="SynerJ — accueil"
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white">
-            S
-          </span>
-          Syner<span className="text-primary">J</span>
+          <Image
+            src="/synerj.png"
+            alt="SynerJ"
+            width={1060}
+            height={360}
+            className="h-10 w-auto"
+          />
         </Link>
 
         <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">

@@ -1,70 +1,89 @@
-import { Globe, Rocket, ShoppingBag, Smartphone } from "lucide-react";
-import CtaButton from "./CtaButton";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 const services = [
   {
-    icon: Globe,
+    index: "01",
     title: "Sites vitrines",
-    description:
-      "Présentez votre activité avec un site élégant et professionnel qui inspire confiance à vos clients dès le premier coup d'œil.",
+    tagline: "Un site élégant qui inspire confiance dès la première visite.",
+    image: "/services/vitrine.jpg",
+    alt: "Interface de site web moderne affichée à l'écran",
+    position: "top" as const,
   },
   {
-    icon: Rocket,
+    index: "02",
     title: "Landing pages",
-    description:
-      "Une page unique et percutante, optimisée pour convertir vos visiteurs en prospects et soutenir vos campagnes.",
+    tagline: "Une page pensée pour transformer vos visiteurs en clients.",
+    image: "/services/landing.jpg",
+    alt: "Équipe travaillant sur la maquette d'une page web",
+    position: "center" as const,
   },
   {
-    icon: ShoppingBag,
-    title: "Mini e-commerce",
-    description:
-      "Vendez en ligne simplement avec une boutique claire, sécurisée et facile à gérer au quotidien.",
-  },
-  {
-    icon: Smartphone,
-    title: "100% responsive",
-    description:
-      "Chaque site s'adapte parfaitement au mobile, à la tablette et à l'ordinateur, pour une expérience irréprochable.",
+    index: "03",
+    title: "E-commerce",
+    tagline: "Vendez vos produits en ligne, simplement et en sécurité.",
+    image: "/services/ecommerce-v2.jpg",
+    alt: "Boutique en ligne consultée sur un smartphone",
+    position: "center" as const,
   },
 ];
 
 export default function Services() {
   return (
-    <section id="services" className="bg-secondary py-24">
+    <section id="services" className="bg-white pt-24">
+      {/* Header */}
       <div className="mx-auto max-w-6xl px-6">
-        <div className="mx-auto max-w-2xl text-center">
-          <span className="text-sm font-semibold uppercase tracking-wider text-primary">
-            Services
-          </span>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-            Des solutions web pensées pour votre réussite
-          </h2>
-          <p className="mt-4 text-lg text-ink/70">
-            Que vous lanciez votre activité ou souhaitiez moderniser votre image,
-            je vous accompagne avec une solution adaptée à vos besoins.
-          </p>
-        </div>
+        <h2 className="text-center text-4xl font-extrabold leading-[1.05] tracking-tight text-ink sm:text-6xl">
+          Nos services
+        </h2>
+      </div>
 
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {services.map((s) => (
+      {/* Full-width service bands */}
+      <div className="mt-14 border-t border-ink/10">
+        {services.map((s) => (
+          <Link
+            key={s.title}
+            href="/contact"
+            aria-label={`${s.title} — me contacter`}
+            className="group relative block h-[33vh] overflow-hidden border-b border-ink/10"
+          >
+            {/* Background image */}
+            <Image
+              src={s.image}
+              alt={s.alt}
+              fill
+              sizes="100vw"
+              className={`object-cover transition-transform duration-700 ease-out group-hover:scale-105 ${
+                s.position === "top" ? "object-top" : "object-center"
+              }`}
+            />
+            {/* Legibility gradient */}
             <div
-              key={s.title}
-              className="group rounded-2xl border border-ink/5 bg-white p-7 transition-all duration-200 hover:-translate-y-1 hover:border-primary/20 hover:shadow-lg hover:shadow-ink/5"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
-                <s.icon className="h-6 w-6" />
-              </div>
-              <h3 className="mt-5 text-lg font-semibold text-ink">{s.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink/65">
-                {s.description}
-              </p>
-            </div>
-          ))}
-        </div>
+              aria-hidden
+              className="absolute inset-0 bg-linear-to-r from-ink/85 via-ink/45 to-transparent transition-colors duration-300 group-hover:from-ink/90"
+            />
 
-        <div className="mt-14 flex justify-center">
-          <CtaButton>Parlons de vos besoins</CtaButton>
-        </div>
+            {/* Content */}
+            <div className="absolute inset-0">
+              <div className="mx-auto flex h-full max-w-6xl items-center justify-between px-6">
+                <div>
+                  <h3 className="text-4xl font-extrabold uppercase leading-none tracking-tight text-white sm:text-5xl lg:text-6xl">
+                    {s.title}
+                  </h3>
+                  <p className="mt-3 max-w-md text-sm text-white/80 sm:text-base">
+                    {s.tagline}
+                  </p>
+                </div>
+
+                {/* Arrow */}
+                <span className="hidden h-14 w-14 flex-none items-center justify-center rounded-full border border-white/40 text-white transition-all duration-300 group-hover:border-primary group-hover:bg-primary sm:flex">
+                  <ArrowRight className="h-6 w-6 transition-transform duration-300 group-hover:translate-x-0.5" />
+                </span>
+              </div>
+            </div>
+          </Link>
+        ))}
       </div>
     </section>
   );

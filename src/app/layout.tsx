@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { siteConfig } from "@/lib/seo";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,26 +14,63 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SynerJ — Création de sites web pour TPE & indépendants",
-  description:
-    "SynerJ conçoit des sites vitrines, landing pages et mini-boutiques e-commerce responsives, modernes et abordables pour les petites entreprises et les indépendants.",
-  keywords: [
-    "création site web",
-    "site vitrine",
-    "landing page",
-    "e-commerce",
-    "site responsive",
-    "TPE",
-    "indépendant",
-    "SynerJ",
-  ],
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.title,
+    template: "%s — SynerJ",
+  },
+  description: siteConfig.description,
+  keywords: [...siteConfig.keywords],
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  category: "technology",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "SynerJ — Création de sites web",
-    description:
-      "Sites vitrines, landing pages et mini-boutiques responsives pour TPE, PME et indépendants. À partir de 500 €.",
     type: "website",
+    locale: siteConfig.locale,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: "SynerJ — Création de sites web pour TPE & indépendants",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
+
+export const viewport: Viewport = {
+  themeColor: "#40b345",
+  colorScheme: "light",
+};
+
+// Rendu par requête : nécessaire pour appliquer le nonce CSP (cf. middleware).
+export const dynamic = "force-dynamic";
 
 export default function RootLayout({
   children,

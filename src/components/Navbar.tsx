@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X } from "lucide-react";
 
 const links = [
@@ -33,13 +34,18 @@ export default function Navbar() {
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link
           href="#accueil"
-          className="flex items-center gap-2 text-lg font-bold tracking-tight text-ink"
+          className="flex items-center"
           onClick={() => setOpen(false)}
+          aria-label="SynerJ — accueil"
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white">
-            S
-          </span>
-          Syner<span className="text-primary">J</span>
+          <Image
+            src="/synerj.png"
+            alt="SynerJ"
+            width={1060}
+            height={360}
+            priority
+            className="h-9 w-auto"
+          />
         </Link>
 
         {/* Desktop */}

@@ -30,8 +30,32 @@ section[id] {
   scroll-margin-top: 5rem;
 }
 
+/* Floating animation for hero visual */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float 8s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .animate-float,
+  .animate-float-slow {
+    animation: none;
   }
 }

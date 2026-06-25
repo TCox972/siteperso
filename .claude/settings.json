@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -A \"Mozilla/5.0\" \"https://unsplash.com/napi/photos/7jrqb7vWujg\" -o /tmp/uns.json -w \"HTTP %{http_code}, size %{size_download}\\\\n\")",
+      "WebFetch(domain:unsplash.com)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}, type %{content_type}\\\\n\" \"https://plus.unsplash.com/premium_photo-1661425491614-6cfe2341c2a1?auto=format&fit=crop&w=900&q=80\")",
+      "Bash(curl -s -o /dev/null -w \"Optimiseur image premium: HTTP %{http_code}, type %{content_type}\\\\n\" \"http://localhost:3000/_next/image?url=https%3A%2F%2Fplus.unsplash.com%2Fpremium_photo-1661425491614-6cfe2341c2a1%3Fauto%3Dformat%26fit%3Dcrop%26w%3D900%26q%3D80&w=1080&q=75\")",
+      "Bash(curl -s -o /private/tmp/claude-501/-Users-JeanJerome-Documents-Pro-Projets-CLAUDE-siteperso/5fe3af39-89a2-4c92-94ef-9450e4f158ca/scratchpad/raw_admin.png -w 'HTTP %{http_code}, type %{content_type}, taille %{size_download}o\\\\n' http://localhost:3000/portfolio/goldcut-admin.png)",
+      "Bash(shasum /private/tmp/claude-501/-Users-JeanJerome-Documents-Pro-Projets-CLAUDE-siteperso/5fe3af39-89a2-4c92-94ef-9450e4f158ca/scratchpad/raw_admin.png public/portfolio/goldcut-admin.png)",
+      "Bash(git mv *)",
+      "Bash(curl -s -o /dev/null -w \"nouvelle URL admin: HTTP %{http_code}, type %{content_type}\\\\n\" \"http://localhost:3000/portfolio/goldcut-dashboard.png\")",
+      "Read(//Users/JeanJerome/Desktop/**)",
+      "Bash(grep -iE '\\\\.\\(png|jpg|jpeg|webp|svg\\)$')",
+      "Read(//Users/JeanJerome/Downloads/**)",
+      "Bash(cp ~/Desktop/2EA096C7-4461-4939-9967-1DDD0087C725.png public/logo-synerj-src.png)",
+      "Bash(sips -g pixelWidth -g pixelHeight -g hasAlpha public/logo-synerj-src.png)",
+      "Bash(python3 -m pip install --user --quiet pillow)",
+      "Bash(python3 -c \"import PIL; print\\('Pillow', PIL.__version__\\)\")",
+      "Bash(brew --version)",
+      "Read(//opt/homebrew/bin/**)",
+      "Bash(node -e \"console.log\\(require\\('sharp/package.json'\\).version\\)\")",
+      "Bash(node __TRACKED_VAR__/remove-bg.js public/logo-synerj-src.png __TRACKED_VAR__/logo-trim-check.png 238)",
+      "Bash(node __TRACKED_VAR__/remove-bg.js public/logo-synerj.png __TRACKED_VAR__/logo-transparent.png 238)",
+      "Bash(sips -g hasAlpha __TRACKED_VAR__/logo-transparent.png)",
+      "Bash(cp __TRACKED_VAR__/logo-transparent.png public/synerj.png)",
+      "Bash(sips -g pixelWidth -g pixelHeight -g hasAlpha public/synerj.png)",
+      "Bash(node scripts-make-favicon.js)"
+    ]
+  }
+}

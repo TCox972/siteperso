@@ -1,12 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Mail, Clock, MapPin } from "lucide-react";
 import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
-  title: "Contact — SynerJ",
+  title: "Contact",
   description:
-    "Parlons de votre projet web. Devis gratuit pour votre site vitrine, landing page ou mini e-commerce.",
+    "Parlons de votre projet web. Devis gratuit et sans engagement pour votre site vitrine, landing page ou boutique e-commerce.",
+  alternates: {
+    canonical: "/contact",
+  },
+  openGraph: {
+    title: "Contact — SynerJ",
+    description:
+      "Parlons de votre projet web. Devis gratuit et sans engagement.",
+    url: "/contact",
+    type: "website",
+  },
 };
 
 export default function ContactPage() {
@@ -26,12 +37,16 @@ export default function ContactPage() {
           <div className="lg:col-span-2">
             <Link
               href="/"
-              className="flex items-center gap-2 text-xl font-bold tracking-tight text-ink"
+              className="flex items-center"
+              aria-label="SynerJ — accueil"
             >
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-base font-bold text-white">
-                S
-              </span>
-              Syner<span className="text-primary">J</span>
+              <Image
+                src="/synerj.png"
+                alt="SynerJ"
+                width={1060}
+                height={360}
+                className="h-10 w-auto"
+              />
             </Link>
 
             <h1 className="mt-6 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
