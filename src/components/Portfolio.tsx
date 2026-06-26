@@ -37,10 +37,7 @@ export default function Portfolio() {
       <div className="mx-auto max-w-6xl px-6">
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">
-          <span className="text-sm font-semibold uppercase tracking-wider text-primary">
-            Portfolio
-          </span>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-ink sm:text-4xl">
             Une réalisation, deux faces du projet
           </h2>
           <p className="mt-4 text-lg text-ink/70">
