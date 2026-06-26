@@ -1,29 +1,47 @@
 "use client";
 
 import { useState } from "react";
-import { Send, CheckCircle2 } from "lucide-react";
+import { Send, CheckCircle2, Loader2 } from "lucide-react";
 
-const budgets = [
-  "500 € — 600 €",
-  "600 € — 750 €",
-  "750 € — 900 €",
-  "Je ne sais pas encore",
-];
-
-const projectTypes = [
-  "Site vitrine",
-  "Landing page",
-  "Mini e-commerce",
-  "Autre / à définir",
-];
+const projectTypes = ["Site vitrine", "Landing page", "E-commerce"];
 
 export default function ContactForm() {
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: brancher à un service d'envoi (Resend, Formspree, route API…).
-    setSent(true);
+    setError(null);
+    setLoading(true);
+
+    const formData = new FormData(e.currentTarget);
+    const payload = Object.fromEntries(formData.entries());
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(
+          data.error ?? "Une erreur est survenue. Veuillez réessayer."
+        );
+      }
+
+      setSent(true);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Une erreur est survenue. Veuillez réessayer."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (sent) {
@@ -45,6 +63,16 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
+      {/* Champ piège anti-spam : invisible pour les humains */}
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="hidden"
+      />
+
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className={labelClass}>
@@ -55,6 +83,7 @@ export default function ContactForm() {
             name="name"
             type="text"
             required
+            autoComplete="name"
             placeholder="Jean Dupont"
             className={fieldClass}
           />
@@ -68,6 +97,7 @@ export default function ContactForm() {
             name="email"
             type="email"
             required
+            autoComplete="email"
             placeholder="vous@exemple.com"
             className={fieldClass}
           />
@@ -76,35 +106,49 @@ export default function ContactForm() {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label htmlFor="type" className={labelClass}>
-            Type de projet
+          <label htmlFor="phone" className={labelClass}>
+            Téléphone
           </label>
-          <select id="type" name="type" className={fieldClass} defaultValue="">
-            <option value="" disabled>
-              Sélectionnez…
-            </option>
-            {projectTypes.map((t) => (
-              <option key={t} value={t}>
-                {t}
-              </option>
-            ))}
-          </select>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            required
+            autoComplete="tel"
+            placeholder="06 12 34 56 78"
+            className={fieldClass}
+          />
         </div>
         <div>
-          <label htmlFor="budget" className={labelClass}>
-            Budget estimé
+          <label htmlFor="company" className={labelClass}>
+            Nom de l&apos;entreprise{" "}
+            <span className="font-normal text-ink/40">(facultatif)</span>
           </label>
-          <select id="budget" name="budget" className={fieldClass} defaultValue="">
-            <option value="" disabled>
-              Sélectionnez…
-            </option>
-            {budgets.map((b) => (
-              <option key={b} value={b}>
-                {b}
-              </option>
-            ))}
-          </select>
+          <input
+            id="company"
+            name="company"
+            type="text"
+            autoComplete="organization"
+            placeholder="Votre société"
+            className={fieldClass}
+          />
         </div>
+      </div>
+
+      <div>
+        <label htmlFor="type" className={labelClass}>
+          Type de projet
+        </label>
+        <select id="type" name="type" className={fieldClass} defaultValue="">
+          <option value="" disabled>
+            Sélectionnez…
+          </option>
+          {projectTypes.map((t) => (
+            <option key={t} value={t}>
+              {t}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div>
@@ -121,12 +165,31 @@ export default function ContactForm() {
         />
       </div>
 
+      {error && (
+        <p
+          role="alert"
+          className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+        >
+          {error}
+        </p>
+      )}
+
       <button
         type="submit"
-        className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-white shadow-sm shadow-primary/30 transition-all hover:bg-primary-dark hover:shadow-md"
+        disabled={loading}
+        className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-white shadow-sm shadow-primary/30 transition-all hover:bg-primary-dark hover:shadow-md disabled:cursor-not-allowed disabled:opacity-70"
       >
-        Envoyer ma demande
-        <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+        {loading ? (
+          <>
+            Envoi en cours…
+            <Loader2 className="h-4 w-4 animate-spin" />
+          </>
+        ) : (
+          <>
+            Envoyer ma demande
+            <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </>
+        )}
       </button>
 
       <p className="text-center text-xs text-ink/50">
