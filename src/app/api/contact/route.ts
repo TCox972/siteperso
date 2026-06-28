@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 
 export const runtime = "nodejs";
 
-const CONTACT_TO = process.env.CONTACT_TO ?? "jornat.jerome@gmail.com";
+const CONTACT_TO = process.env.CONTACT_TO ?? "contact@synerjdigital.com";
 
 /**
  * Rate limiting en mémoire : max 5 envois par IP sur une fenêtre de 10 min.

@@ -12,7 +12,7 @@ export const siteConfig = {
   title: "SynerJ — Création de sites web pour TPE & indépendants",
   description:
     "SynerJ conçoit des sites vitrines, landing pages et boutiques e-commerce responsives, modernes et abordables pour les TPE, PME et indépendants. Tarifs fixes à partir de 250 €.",
-  email: "contact@synerj.fr",
+  email: "contact@synerjdigital.com",
   locale: "fr_FR",
   ogImage: "/og.png",
   keywords: [

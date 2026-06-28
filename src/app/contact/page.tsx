@@ -65,10 +65,10 @@ export default function ContactPage() {
                 <div>
                   <p className="text-sm font-semibold text-ink">Email</p>
                   <a
-                    href="mailto:contact@synerj.fr"
+                    href="mailto:contact@synerjdigital.com"
                     className="text-sm text-ink/65 hover:text-primary"
                   >
-                    contact@synerj.fr
+                    contact@synerjdigital.com
                   </a>
                 </div>
               </li>
